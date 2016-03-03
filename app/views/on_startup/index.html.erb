@@ -21,7 +21,7 @@
 
 <div>
 	<input type='text' id='text-input'>
-	<input type="submit" value="Create" id = 'create-btn'></div>
+	<input type="submit" value="Create" id='create-btn'></div>
 
 <script>
 $('#create-btn').click(function(){
@@ -41,7 +41,7 @@ $('#create-btn').click(function(){
 		}
 	});
 });
-$('.todo-item').click(function(){
+$('.todo_item').click(function(){
 	id = $(this).attr('id');
 	that = $(this);
 	console.log(id);
@@ -61,7 +61,7 @@ function completeItem(id){
 		type:'POST',
 		data:{id: id},
 		success:function(data){
-			$('#'+id).remove();
+			$('#row'+id).remove();
 		}
 	})
 }
