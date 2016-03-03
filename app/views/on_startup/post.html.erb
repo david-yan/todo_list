@@ -1,0 +1,5 @@
+<tr id="row<%= @item.id %>">
+	<td><%= @item.thing_to_do %></td>
+	<td><button onclick="completeItem(<%= @item.id %>)">Complete</button></td>
+	<td><input type='submit' value='Complete' class="todo-item" id='<%= @item.id %>'></td>
+</tr>

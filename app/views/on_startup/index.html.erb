@@ -1,0 +1,68 @@
+<script src = 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.min.js'></script>
+
+<h3>To Do List</h3>
+<div id = 'todo-list'>
+	<table style="border: 1px solid black" class="table" id = 'todo-table'>
+		<tr>
+			<th width="30%" style="background-color: #CCFFCC; margin: 5px">Thing to do</th>
+			<th width="30%" style="background-color: #CCFFCC; margin: 5px">Done</th>
+			<th width="30%" style="background-color: #CCFFCC; margin: 5px">Done2</th>
+		</tr>
+		<% @items.each do |item| %>
+		<tr id="row<%= item.id %>">
+			<td><%= item.thing_to_do %></td>
+			<td><button onclick="completeItem(<%= item.id %>)">Complete</button></td>
+			<td><input type='submit' value='Complete' class="todo-item" id='<%= item.id %>'></td>
+		</tr>
+		<% end %>
+	</table>
+</div>
+
+
+<div>
+	<input type='text' id='text-input'>
+	<input type="submit" value="Create" id = 'create-btn'></div>
+
+<script>
+$('#create-btn').click(function(){
+	val = $('#text-input').val();
+	$.ajax({
+		url:'/post_a_todo', 
+		type:'POST',
+		data:{
+			text: val
+		},
+		success:function(data){
+			console.log('success');
+			console.log(data);
+			// window.location.reload();
+			$('#todo-table').append(data);
+			$('#text-input').val("");
+		}
+	});
+});
+$('.todo-item').click(function(){
+	id = $(this).attr('id');
+	that = $(this);
+	console.log(id);
+	$.ajax({
+		url:'/delete_todo',
+		type:'POST',
+		data:{id: id},
+		success:function(data){
+			$('#row'+id).remove();
+		}
+	})
+});
+function completeItem(id){
+	console.log(id)
+	$.ajax({
+		url:'/delete_todo',
+		type:'POST',
+		data:{id: id},
+		success:function(data){
+			$('#'+id).remove();
+		}
+	})
+}
+</script>
